@@ -1,0 +1,81 @@
+CREATE TABLE CARRO
+	(chassi VARCHAR(15),
+	placa VARCHAR(7) NOT NULL,
+	modelo VARCHAR(20) NOT NULL,
+	montadora VARCHAR(20) NOT NULL,
+	ano INTEGER NOT NULL,
+	preco INTEGER NOT NULL,
+	CONSTRAINT PK_CARRO PRIMARY KEY (chassi)
+	);
+	
+INSERT INTO CARRO VALUES ('AA11BB22', 'AAA1111', 'Pálio', 'FIAT', 2010, 25000),
+	('AA11BB23', 'AAA1112', 'Pálio', 'FIAT', 2010, 25000),
+	('AA11BB24', 'AAA1113', 'Fiesta', 'FIAT', 2015, 35000),
+	('AA11BB25', 'AAA1114', 'Corolla', 'FORD', 2017, 38000),
+	('AA11BB26', 'AAA1115', 'Pálio', 'FORD', 2010, 32000),
+	('AA11BB27', 'AAA1116', 'Renegade', 'VW', 2010, 41000),
+	('AA11BB28', 'AAA1117', 'Jeep', 'CHEVROLET', 2011, 21000),
+	('AA11BB29', 'AAA1118', 'Onix', 'FIAT', 2008, 19000),
+	('AA11BB30', 'AAA1119', 'Onix', 'CHEVROLET', 2007, 17000),
+	('AA11BB31', 'AAA1120', 'Uno', 'HYUNDAY', 2019, 66000),
+	('AA11BB32', 'AAA1121', 'Gol', 'VW', 2012, 16000);
+	
+SELECT * FROM CARRO
+	WHERE montadora = 'FIAT' 
+	AND ano = 2008;
+	
+SELECT * FROM CARRO
+	WHERE montadora <> 'FORD' 
+	AND preco > 30000;
+	
+SELECT modelo, montadora FROM CARRO
+	WHERE ano >= 2008
+	AND preco BETWEEN 20000 AND 40000;
+	
+SELECT modelo, montadora, preco FROM CARRO
+	ORDER BY preco DESC;
+	
+SELECT modelo AS "Nome do Carro", montadora, ano AS "Ano do Carro", preco FROM CARRO
+	WHERE ano >= 2007 AND ano <= 2010
+	ORDER BY preco DESC;
+	
+SELECT modelo AS "Nome do Carro", montadora, ano AS "Ano do Carro", preco FROM CARRO
+	WHERE ano BETWEEN 2007 AND 2010
+	ORDER BY preco DESC;
+	
+SELECT modelo AS "Carros de 2010", montadora, preco FROM CARRO
+	WHERE ano = 2010
+	ORDER BY modelo;
+	
+SELECT modelo, MAX(preco) FROM CARRO
+	GROUP BY modelo;
+	
+SELECT montadora, COUNT(modelo) FROM CARRO
+	GROUP BY montadora;
+	
+SELECT montadora, COUNT(modelo) FROM CARRO
+	GROUP BY montadora
+	ORDER BY montadora;
+	
+SELECT modelo, max(preco) AS "Maior preço", sum(preco) AS "Soma dos preços" FROM CARRO
+	GROUP BY modelo;
+	
+SELECT modelo, ano, max(preco) FROM CARRO
+	WHERE modelo = 'Onix'
+	GROUP BY modelo, ano;
+	
+SELECT modelo FROM CARRO
+	WHERE modelo LIKE 'f%' OR modelo LIKE '%a'
+	
+SELECT modelo FROM CARRO
+	WHERE modelo ILIKE 'f%' OR modelo ILIKE '%a'
+	
+SELECT modelo, montadora, preco FROM CARRO
+	WHERE montadora = 'FIAT'
+	AND modelo ILIKE '%i%'
+	ORDER BY modelo;
+	
+SELECT modelo, ano FROM CARRO
+	WHERE ano BETWEEN 2008 AND 2011 
+	AND modelo ILIKE '%i%'
+	ORDER BY modelo, ano DESC;
