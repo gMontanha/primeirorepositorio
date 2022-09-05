@@ -1,0 +1,30 @@
+.tabela1,
+td{
+    border: 1px solid black;
+}
+
+.trgreen{
+    background-color: lightgreen;
+}
+
+.tabela2,
+td{
+    border: 1px solid black;
+    color: white;
+}
+
+.trblack{
+    background-color: black;
+}
+
+.trgrey{
+    background-color: grey;
+}
+
+.trlightgrey{
+    background-color: lightgrey;
+}
+
+
+
+
