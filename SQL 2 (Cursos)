@@ -1,0 +1,69 @@
+CREATE TABLE Professor(
+    prontuario INTEGER,
+    pnome VARCHAR(20) NOT NULL,
+    snome VARCHAR(40) NOT NULL,
+    dtaNasc DATE NOT NULL,
+    CONSTRAINT PK_PROFESSOR PRIMARY KEY (prontuario)
+);
+
+CREATE TABLE Curso(
+    idCurso INTEGER,
+    nomeCurso VARCHAR(30) NOT NULL,
+    nroSemestres INTEGER NOT NULL,
+    dtaFundacao DATE NOT NULL,
+    CONSTRAINT PK_CURSO PRIMARY KEY (idCurso)
+);
+
+CREATE TABLE Aluno(
+    prontuario VARCHAR(20),
+    pnome VARCHAR(15) NOT NULL,
+    snome VARCHAR(30) NOT NULL,
+    dtaNasc DATE NOT NULL,
+    sexo CHAR(1) NOT NULL,
+    idCurso INTEGER NOT NULL,
+    CONSTRAINT PK_ALUNO PRIMARY KEY (prontuario),
+    CONSTRAINT FK_ALUNO FOREIGN KEY (idCurso) REFERENCES Curso ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE professorLecionaAluno(
+    prontuarioAluno VARCHAR(20),
+    prontuarioProfessor INTEGER,
+    ano INTEGER,
+    semestre INTEGER,
+    nota REAL NOT NULL,
+    CONSTRAINT PK_LECIONA PRIMARY KEY (prontuarioAluno, prontuarioProfessor, ano, semestre),
+    CONSTRAINT FK_LECIONA_ALUNO FOREIGN KEY (prontuarioAluno) REFERENCES Aluno ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_PROFESSOR_LECIONA FOREIGN KEY (prontuarioProfessor) REFERENCES Professor ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+INSERT INTO Professor VALUES
+    (000, 'Ednaldo', 'Pereira', '0001-01-01'),
+    (001, 'Francisco', 'Silva', '1994-03-21'),
+    (002, 'Renata', 'Glascor', '1977-07-22'),
+    (003, 'Marcelo', 'Meliere', '1982-09-13'),
+    (004, 'Ricardo', 'Portelo', '1989-09-11');
+    
+SELECT * FROM Professor;
+    
+INSERT INTO Curso VALUES
+    (000, 'Macroeconomia', 8, '2007-02-03'),
+    (001, 'Ciência da Computação', 8, '2020-01-07'),
+    (002, 'Engenharia Civil', 10, '2016-03-08'),
+    (003, 'Engenharia Elétrica', 10, '2014-10-21'),
+    (004, 'Física', 8, '2007-02-03');
+    
+SELECT * FROM Curso;
+
+INSERT INTO Aluno VALUES
+    (000, 'Maria', 'Eduarda', '2003-07-08', 'F', 000),
+    (001, 'Gabriela', 'Oliveira', '2001-03-03', 'F', 000),
+    (002, 'Luciene', 'Helena', '2002-05-23', 'F', 001),
+    (003, 'Fernanda', 'Boline', '2001-04-04', 'F', 003),
+    (004, 'Ricardo', 'Gabrício', '2000-11-15', 'M', 002);
+    
+INSERT INTO ProfessorLecionaAluno VALUES
+    (000, 000, 3, 6, 8),
+    (001, 000, 3, 6, 9),
+    (002, 001, 2, 4, 7),
+    (003, 003, 1, 1, 10),
+    (004, 002, 4, 7, 9);
