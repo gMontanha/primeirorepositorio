@@ -67,3 +67,49 @@ INSERT INTO ProfessorLecionaAluno VALUES
     (002, 001, 2, 4, 7),
     (003, 003, 1, 1, 10),
     (004, 002, 4, 7, 9);
+    
+--ERRADO
+SELECT pnome, nomeCurso, sexo FROM aluno, curso
+	ORDER BY pnome;
+
+--JUNÇÃO CLÁSSICA
+SELECT pnome, nomeCurso FROM curso C, aluno A
+	WHERE C.idCurso = A.idCurso;
+	
+--INNER JOIN
+SELECT pnome, nomeCurso FROM curso C
+	INNER JOIN Aluno A
+	ON C.idCurso = A.idCurso;
+	
+SELECT pnome, ano FROM professorLecionaAluno T, professor P
+	WHERE P.prontuario = T.prontuarioProfessor;
+	
+SELECT pnome, nota FROM aluno A, professorLecionaAluno P
+	WHERE A.prontuario = P.prontuarioAluno;
+	
+SELECT A.pnome, C.pnome, nota FROM aluno A, professorLecionaAluno P, professor C
+	WHERE A.prontuario = P.prontuarioAluno AND C.prontuario = P.prontuarioProfessor
+	AND NOTA > 7;
+
+SELECT A.pnome, C.pnome, nota FROM professorLecionaAluno P
+	INNER JOIN aluno A
+	ON A.prontuario = P.prontuarioAluno
+	INNER JOIN professor C
+	ON C.prontuario = P.prontuarioProfessor;
+	
+--Ex1 
+SELECT pnome, sexo, nomeCurso FROM aluno A
+	INNER JOIN curso C
+	ON A.idCurso = C.idCurso
+	WHERE nomeCurso = 'Macroeconomia';
+	
+--Ex2
+SELECT P.pnome, AVG(nota) AS "Média" FROM professor P, professorLecionaAluno T
+	WHERE P.prontuario = T.prontuarioProfessor
+	GROUP BY pnome
+	HAVING AVG(nota) > 7;
+
+--Ex3
+SELECT P.pnome, A.pnome, ano FROM professor P, aluno A, professorLecionaAluno T
+	WHERE P.pnome = A.pnome
+	AND ano = 1;
